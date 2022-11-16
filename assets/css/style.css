@@ -134,6 +134,7 @@ main{
     background-color: black;
     color: white;
 }
+
 .name-price{
     display: flex;
     flex-direction: column;

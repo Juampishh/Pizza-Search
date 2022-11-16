@@ -53,10 +53,18 @@ let pizzas = [
 //Nos traemos los elementos
 const main = document.getElementById('main')
 const container = document.getElementById('container');
-
+const btn = document.getElementById('btn-card');
 const form = document.getElementById('form');
+const pizzaInfo = document.querySelector('.pizza-info');
 
 const input = document.getElementById('input');
+
+
+
+
+const removeCard = () =>{
+    document.querySelector('.pizza-info').style.display = 'none';
+}
 
 // Buscamos la pizza
 const findPizza = (value)=> pizzas.find(pizzas => pizzas.Id === value);
@@ -66,22 +74,21 @@ const showEmptyError = () =>{
     <div class="empty-error">
         <h2>Por favor, ingrese un numero para que podamos buscar su pizza en el menu</h2>
         <i class="fa-solid fa-triangle-exclamation"></i>
-        <button>❌</button>
+        <button onclick="removeCard()" id="btn-card">❌</button>
     </div>
     `
 }
 
 const renderResult = (pizzas) =>{
-    if(pizzas[input.value]){
+    if(input.value > 8){
         main.innerHTML +=`
         <div class="empty-error">
         <h2>No se encontro una pizza con el id ingresado</h2>
         <i class="fa-solid fa-triangle-exclamation"></i>
-        <button>❌</button>
+        <button onclick="removeCard()" id="btn-card" >❌</button>
     </div>
         `;
     }else{
-        localStorage.setItem("Pizza buscada", input.value)
         main.innerHTML += `
         <div class="pizza-info">
             <img src="./assets/img/${pizzas.nombre}.png" alt="">
@@ -90,11 +97,14 @@ const renderResult = (pizzas) =>{
                 <h3>$${pizzas.Precio}</h3>
                 <p>${pizzas.Ingredientes}</p>
             </div>
-            <button>❌</button>
+            <button onclick="removeCard()" id="btn" >❌</button>
         </div>
         `
     }
+
+    saveLocalStorage()
 }
+
 
 
 const searchPizza = (e) =>{
@@ -110,7 +120,10 @@ const searchPizza = (e) =>{
 
 const init = () =>{
     form.addEventListener("submit",searchPizza);
-    
 };
+
+const saveLocalStorage = () => {
+    localStorage.setItem("Pizza",input.value)   
+}
 
 init()
